@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E🌴%3C/text%3E%3C/svg%3E">
 <title>Kasadya Hotel — Mandaue City, Cebu</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
 <style>
@@ -19,8 +20,14 @@ nav button:not(.active):hover{background:rgba(253,249,239,.12);color:var(--shell
 .frame{background:var(--sand);padding:22px;border:1px solid rgba(253,249,239,.2)}
 .head{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px dashed var(--mid);padding-bottom:10px;margin-bottom:14px}
 .head h2{font:600 22px Fraunces,serif;margin:0;color:var(--deep)}.head span{font-size:12px;color:var(--mut)}
-.scroll{overflow-x:auto;background:#fbf6ea;border:1px solid #d8cdb2}
-svg{display:block;width:100%;min-width:820px;height:auto}
+.viewer{position:relative;aspect-ratio:1000/690;background:#fbf6ea;border:1px solid #d8cdb2;overflow:hidden;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.viewer.z{touch-action:none;cursor:grab}
+svg{display:block;width:100%;height:100%}
+.zc{position:absolute;right:8px;top:8px;display:flex;flex-direction:column;gap:6px}
+.zc button{width:42px;height:42px;border:1px solid var(--deep);background:rgba(253,249,239,.95);color:var(--deep);font:600 20px 'IBM Plex Mono';cursor:pointer;border-radius:8px;line-height:1;padding:0}
+.zc button:active{background:var(--deep);color:#fff}
+.tip{position:absolute;left:8px;bottom:8px;background:rgba(11,77,82,.9);color:#fff;font-size:11px;padding:6px 10px;border-radius:6px;pointer-events:none;transition:opacity .3s}
+nav button b{display:block;font-weight:600}nav button small{display:block;font-size:10.5px;opacity:.8;margin-top:2px}
 .room{cursor:pointer;outline:none}
 .room .fl{stroke:#1c2b2a;stroke-width:5;transition:filter .15s}
 .room:hover .fl{filter:brightness(.92)}
@@ -37,14 +44,29 @@ svg{display:block;width:100%;min-width:820px;height:auto}
 .chips button{font:11px 'IBM Plex Mono';border:1px solid var(--mid);background:transparent;padding:5px 9px;cursor:pointer;color:var(--deep)}
 .chips button.on{background:var(--deep);color:#fff}
 .legend{margin-top:12px;font-size:11px;color:var(--mut);display:flex;gap:18px;flex-wrap:wrap}
+@media(max-width:640px){
+.sheet{padding:16px 12px 40px}
+header{padding-bottom:14px;margin-bottom:14px}
+.loc{font-size:12px}
+.meta{width:100%;display:grid;grid-template-columns:1fr 1.4fr 1fr;gap:10px;font-size:10px}.meta span{font-size:11.5px}
+nav button{padding:10px 4px;font-size:12px}nav button small{font-size:9.5px}
+.frame{padding:12px}
+.head h2{font-size:18px}.head span{font-size:10.5px;white-space:nowrap}
+.viewer{aspect-ratio:1/1}
+.rail{padding:12px}
+.chips{flex-wrap:nowrap;overflow-x:auto;padding-bottom:6px;-webkit-overflow-scrolling:touch}
+.chips button{white-space:nowrap;padding:8px 12px;font-size:12px}
+.legend{font-size:10.5px;gap:8px 14px}
+footer{font-size:10px}
+}
 footer{margin-top:20px;font-size:11px;color:rgba(253,249,239,.55);display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px}
 </style></head><body><div class="sheet">
 <header><div><h1>Kasadya Hotel</h1><span class="loc">📍 Mandaue City, Cebu, Philippines</span></div>
 <div class="meta"><div>DEADLINE<span>Oct 5, 2026</span></div><div>SHEETS<span>A-101 / A-102 / A-103</span></div><div>SCALE<span>1 grid = 1 m</span></div></div></header>
-<nav id="tabs"><button class="active" data-k="f1">1st Floor · Arrival &amp; Dining</button><button data-k="f2">2nd Floor · Guest Rooms</button><button data-k="f3">3rd Floor · Leisure</button></nav>
+<nav id="tabs"><button class="active" data-k="f1"><b>1st Floor</b><small>Arrival &amp; Dining</small></button><button data-k="f2"><b>2nd Floor</b><small>Guest Rooms</small></button><button data-k="f3"><b>3rd Floor</b><small>Leisure</small></button></nav>
 <div class="frame">
 <div class="head"><h2 id="ft"></h2><span id="fs"></span></div>
-<div class="scroll"><svg viewBox="0 0 1000 690" role="img" aria-label="Hotel floor plan">
+<div class="viewer" id="vw"><svg id="sv" viewBox="0 0 1000 690" role="img" aria-label="Hotel floor plan">
 <defs>
 <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#e3dac4" stroke-width=".7"/></pattern>
 <rect id="ch" x="-7" y="-6" width="14" height="12" rx="3" fill="#9aa59f" stroke="#59645f"/>
@@ -62,9 +84,9 @@ footer{margin-top:20px;font-size:11px;color:rgba(253,249,239,.55);display:flex;j
 </defs>
 <rect width="1000" height="690" fill="url(#grid)"/>
 <g id="rooms"></g><g id="over" pointer-events="none"></g>
-</svg></div>
+</svg><div class="zc"><button id="zi" aria-label="Zoom in">+</button><button id="zo" aria-label="Zoom out">−</button><button id="zf" aria-label="Show whole floor">⤢</button></div><div class="tip" id="tip">Tap a room to zoom in</div></div>
 <div class="rail" id="rail"></div><div class="chips" id="chips"></div>
-<div class="legend"><span>■ Elevator</span><span style="color:#1f9d55">■ Fire exit</span><span>◜ Door swing</span><span>Tap or click any room for its size and purpose</span></div>
+<div class="legend"><span>■ Elevator</span><span style="color:#1f9d55">■ Fire exit</span><span>◜ Door swing</span><span>Tap a room to zoom in; drag to pan</span></div>
 </div>
 <footer><span>Kasadya Hotel — Digital Layout Exercise</span><span>Midterm "Performance" Exam · Mandaue City, Cebu</span></footer>
 </div>
@@ -123,14 +145,31 @@ R+=room('Gym',250,390,380,210,'#dfe6e8','Fitness area with treadmills, benches, 
 R+=room('Park',630,390,300,210,'#a8cf94','Landscaped rooftop garden with trees, benches and a small fountain for relaxing.',{ly:575,f:'<path d="M632 540C700 480 800 560 928 480" stroke="#e8dcc0" stroke-width="26" fill="none"/>'+[[670,430],[760,440],[880,420],[700,565],[850,560]].map(p=>u('tree',...p,0,.9)).join('')+'<circle cx="785" cy="510" r="20" fill="#7fd0d6" stroke="#2a8f9a" stroke-width="3"/>'+rc(700,505,40,12,'#8a5a3c','#5a3a24')+rc(830,500,40,12,'#8a5a3c','#5a3a24')});
 return [R,frame(600)+door(200,250,44,'h',-1)+door(620,250,44,'h',-1)+door(100,390,36,'h',1)+door(410,390,44,'h',1)+door(740,390,44,'h',1)+door(835,250,44,'h',1)+fe()]}
 
+const $=id=>document.getElementById(id);
+const sv=$('sv'),vw=$('vw');let cur={x:0,y:0,w:1000},raf,pan=null,moved=false;
+const asp=()=>{const b=vw.getBoundingClientRect();return b.width/b.height||1.45},fitW=()=>Math.max(1040,730*asp());
+function setV(v){cur=v;sv.setAttribute('viewBox',`${v.x} ${v.y} ${v.w} ${v.w/asp()}`);vw.classList.toggle('z',v.w<fitW()-2)}
+function clampV(v){const h=v.w/asp();v.x=Math.min(Math.max(v.x,-40),Math.max(-40,1040-v.w));v.y=Math.min(Math.max(v.y,-40),Math.max(-40,730-h));return v}
+function go(cx,cy,w,now){w=Math.max(200,Math.min(w,fitW()));const t=clampV({x:cx-w/2,y:cy-w/asp()/2,w});if(w>=fitW()-1){t.x=500-w/2;t.y=345-w/asp()/2}
+cancelAnimationFrame(raf);if(now)return setV(t);const a={...cur},s=performance.now();
+const step=n=>{const k=Math.min(1,(n-s)/300),e=1-Math.pow(1-k,3);setV({x:a.x+(t.x-a.x)*e,y:a.y+(t.y-a.y)*e,w:a.w+(t.w-a.w)*e});if(k<1)raf=requestAnimationFrame(step)};raf=requestAnimationFrame(step)}
+const fit=now=>go(500,345,fitW(),now);
+const zoomBy=f=>go(cur.x+cur.w/2,cur.y+cur.w/asp()/2,cur.w/f);
+function zoomRoom(r){const b=r.querySelector('.fl'),x=+b.getAttribute('x'),y=+b.getAttribute('y'),w=+b.getAttribute('width'),h=+b.getAttribute('height');go(x+w/2,y+h/2,Math.max(w+80,(h+80)*asp()))}
+$('zi').onclick=()=>zoomBy(1.6);$('zo').onclick=()=>zoomBy(1/1.6);$('zf').onclick=()=>fit();
+vw.addEventListener('pointerdown',e=>{if(e.target.closest('.zc'))return;pan={x:e.clientX,y:e.clientY,v:{...cur}};moved=false});
+window.addEventListener('pointermove',e=>{if(!pan)return;const dx=e.clientX-pan.x,dy=e.clientY-pan.y;if(Math.abs(dx)+Math.abs(dy)>6)moved=true;
+if(moved&&cur.w<fitW()-2){cancelAnimationFrame(raf);const k=pan.v.w/vw.clientWidth;setV(clampV({x:pan.v.x-dx*k,y:pan.v.y-dy*k,w:cur.w}))}});
+['pointerup','pointercancel'].forEach(t=>window.addEventListener(t,()=>{pan=null;setTimeout(()=>moved=false,0)}));
+window.addEventListener('resize',()=>setV(clampV({...cur,w:Math.min(cur.w,fitW())})));
 const F={f1:[f1,'First Floor Plan','SHEET A-101'],f2:[f2,'Second Floor Plan','SHEET A-102'],f3:[f3,'Third Floor Plan','SHEET A-103']};
-const $=id=>document.getElementById(id),hint='<span class="d-note">Click any room on the plan to see its size and purpose.</span>';
-function show(k){rid=0;DR='';const [R,O]=F[k][0]();$('rooms').innerHTML=R;$('over').innerHTML=O;$('ft').textContent=F[k][1];$('fs').textContent=F[k][2];$('rail').innerHTML=hint;const ch=$('chips');ch.innerHTML='';
+const hint='<span class="d-note">Click any room on the plan to see its size and purpose.</span>';
+function show(k){rid=0;DR='';const [R,O]=F[k][0]();$('rooms').innerHTML=R;$('over').innerHTML=O;$('ft').textContent=F[k][1];$('fs').textContent=F[k][2];$('rail').innerHTML=hint;fit(true);$('tip').style.opacity=1;const ch=$('chips');ch.innerHTML='';
 const rs=[...document.querySelectorAll('.room')];
-rs.forEach(r=>{const pick=()=>{rs.forEach(x=>x.classList.remove('sel'));r.classList.add('sel');r.parentNode.appendChild(r);const w=r.dataset.w/40,h=r.dataset.h/40;
+rs.forEach(r=>{const pick=()=>{rs.forEach(x=>x.classList.remove('sel'));r.classList.add('sel');r.parentNode.appendChild(r);zoomRoom(r);$('tip').style.opacity=0;const w=r.dataset.w/40,h=r.dataset.h/40;
 $('rail').innerHTML=`<span class="d-name">${r.dataset.name}</span><span class="d-meta">${w.toFixed(1)} m × ${h.toFixed(1)} m · ${(w*h).toFixed(1)} m²</span><span class="d-note">${r.dataset.note}</span>`;
-ch.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.i==r.id))};
-r.addEventListener('click',pick);r.addEventListener('keydown',e=>{if(e.key=='Enter'||e.key==' '){e.preventDefault();pick()}});
+ch.querySelectorAll('button').forEach(b=>{const on=b.dataset.i==r.id;b.classList.toggle('on',on);if(on)b.scrollIntoView({inline:'center',block:'nearest'})})};
+r.addEventListener('click',()=>{if(!moved)pick()});r.addEventListener('keydown',e=>{if(e.key=='Enter'||e.key==' '){e.preventDefault();pick()}});
 const b=document.createElement('button');b.textContent=r.dataset.name;b.dataset.i=r.id;b.onclick=pick;ch.appendChild(b)})}
 document.querySelectorAll('#tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#tabs button').forEach(x=>x.classList.remove('active'));b.classList.add('active');show(b.dataset.k)});
 show('f1');
