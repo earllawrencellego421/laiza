@@ -33,6 +33,8 @@ nav button b{display:block;font-weight:600}nav button small{display:block;font-s
 .room:hover .fl{filter:brightness(.92)}
 .room.sel .fl,.room:focus-visible .fl{stroke:#e0803f}
 .lb{font:600 12px 'IBM Plex Mono';text-anchor:middle;dominant-baseline:middle;fill:#1c2b2a;paint-order:stroke;stroke:rgba(251,246,234,.9);stroke-width:4px;pointer-events:none;letter-spacing:.4px}
+.room.fxr .fl{stroke:#1f9d55;stroke-width:2;fill-opacity:.55}
+.rt{font:600 11px 'IBM Plex Mono';border:1px solid #c0392b;color:#c0392b;background:transparent;padding:6px 10px;cursor:pointer;border-radius:6px}.rt.on{background:#c0392b;color:#fff}
 .lt .lb{fill:#fff;stroke:none}
 .dr{fill:none;stroke:#1c2b2a;stroke-width:1.5}
 .dm path{stroke:#5f7371;stroke-width:1;fill:none}.dm text{font:500 10px 'IBM Plex Mono';fill:#5f7371;text-anchor:middle}
@@ -69,6 +71,7 @@ footer{margin-top:20px;font-size:11px;color:rgba(253,249,239,.55);display:flex;j
 <div class="head"><h2 id="ft"></h2><span id="fs"></span></div>
 <div class="viewer" id="vw"><svg id="sv" viewBox="0 0 1000 690" role="img" aria-label="Hotel floor plan">
 <defs>
+<marker id="arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L10 5L0 10z" fill="#c0392b"/></marker>
 <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#e3dac4" stroke-width=".7"/></pattern>
 <rect id="ch" x="-7" y="-6" width="14" height="12" rx="3" fill="#9aa59f" stroke="#59645f"/>
 <g id="tbl"><circle r="17" fill="#b98a55" stroke="#6d4a2a" stroke-width="1.5"/><use href="#ch" y="-26"/><use href="#ch" y="26"/><use href="#ch" x="-26"/><use href="#ch" x="26"/></g>
@@ -87,7 +90,7 @@ footer{margin-top:20px;font-size:11px;color:rgba(253,249,239,.55);display:flex;j
 <g id="rooms"></g><g id="over" pointer-events="none"></g>
 </svg><div class="zc"><button id="zi" aria-label="Zoom in">+</button><button id="zo" aria-label="Zoom out">−</button><button id="zf" aria-label="Show whole floor">⤢</button></div><div class="tip" id="tip">Tap a room to zoom in</div></div>
 <div class="rail" id="rail"></div><div class="chips" id="chips"></div>
-<div class="legend"><span>■ Elevator</span><span style="color:#1f9d55">■ Fire exit</span><span>◜ Door swing</span><span>Tap a room to zoom in; drag to pan</span></div>
+<div class="legend"><button class="rt" id="rt">🔥 Show emergency route</button><span>■ Elevator</span><span style="color:#1f9d55">■ Fire exit</span><span>◜ Door swing</span><span>Tap a room to zoom in; drag to pan</span></div>
 </div>
 <footer><span>Kasadya Hotel — Digital Layout Exercise</span><span>Midterm "Performance" Exam · Mandaue City, Cebu</span><div class="credit">Designed &amp; created by <b>EARL LAWRENCE LLEGO</b></div></footer>
 </div>
@@ -96,13 +99,15 @@ let rid=0,DR='';
 const u=(id,x,y,r=0,s=1)=>`<use href="#${id}" transform="translate(${x} ${y}) rotate(${r}) scale(${s})"/>`;
 const rc=(x,y,w,h,f,st='#7d6a4d')=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${f}" stroke="${st}" stroke-width="1.5"/>`;
 const room=(name,x,y,w,h,fill,note,o={})=>{const id='r'+rid++,tx=o.lx??x+w/2,ty=o.ly??y+h/2;
-return `<g class="room${o.lt?' lt':''}" id="${id}" tabindex="0" role="button" aria-label="${name}" data-name="${name}" data-note="${note}" data-w="${w}" data-h="${h}"><rect class="fl" x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}"/>${o.f||''}<text class="lb" x="${tx}" y="${ty}">${o.t||name.toUpperCase()}</text></g>`};
+return `<g class="room${o.lt?' lt':''}${o.cls?' '+o.cls:''}" id="${id}" tabindex="0" role="button" aria-label="${name}" data-name="${name}" data-note="${note}" data-w="${w}" data-h="${h}"${o.ns?' data-ns="1"':''}><rect class="fl" x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}"/>${o.f||''}<text class="lb" x="${tx}" y="${ty}">${o.t||name.toUpperCase()}</text></g>`};
 const door=(x,y,l,d,s)=>d=='h'?`<rect x="${x+1}" y="${y-4}" width="${l-2}" height="8" fill="#fbf6ea"/><path class="dr" d="M${x} ${y}V${y+l*s}M${x+l} ${y}A${l} ${l} 0 0 ${s>0?1:0} ${x} ${y+l*s}"/>`:`<rect x="${x-4}" y="${y+1}" width="8" height="${l-2}" fill="#fbf6ea"/><path class="dr" d="M${x} ${y}H${x+l*s}M${x} ${y+l}A${l} ${l} 0 0 ${s>0?0:1} ${x+l*s} ${y}"/>`;
 const dH=(a,b,y)=>`<g class="dm"><path d="M${a} ${y}H${b}M${a} ${y-5}v10M${b} ${y-5}v10"/><text x="${(a+b)/2}" y="${y-6}">${((b-a)/40).toFixed(2)} m</text></g>`;
 const dV=(a,b,x)=>`<g class="dm"><path d="M${x} ${a}V${b}M${x-5} ${a}h10M${x-5} ${b}h10"/><text transform="translate(${x-6} ${(a+b)/2}) rotate(-90)">${((b-a)/40).toFixed(2)} m</text></g>`;
 const frame=yb=>dH(50,930,24)+dV(40,yb,26)+`<g class="dm"><path d="M50 672h160M50 667v10M130 667v10M210 667v10"/><text x="130" y="662">4 m</text></g>`;
 const fe=()=>door(930,130,40,'v',-1)+`<rect x="937" y="128" width="12" height="44" rx="3" fill="#1f9d55"/><text class="ex" transform="translate(946 150) rotate(90)">EXIT</text><text class="fx" transform="translate(966 150) rotate(90)">FIRE EXIT</text>`;
 const stairs=(y2,st=[])=>{let s='';for(let y=48;y<y2-8;y+=12)s+=`<path d="M808 ${y}H922" stroke="#7b8583"/>`;return room('Stairs',800,40,130,y2-40,'#d3d9d7','Main staircase between floors, next to the fire exit.',{f:s,ly:y2/2+20}) };
+const fxr=()=>room('Fire Exit',928,116,46,68,'#bfe8cf','Emergency exit beside the stairs, marked with the green EXIT sign. Keep it clear at all times: the stairs door opens straight to it, and it is in the same spot on every floor.',{t:' ',ns:1,cls:'fxr'});
+const ROUTE='<g id="route"><circle cx="500" cy="372" r="7" fill="#c0392b"/><text class="fx" x="500" y="392" style="fill:#c0392b">YOU ARE HERE</text><path d="M500 372H857V150H924" fill="none" stroke="#c0392b" stroke-width="4" stroke-dasharray="10 8" marker-end="url(#arr)"/></g>';
 const elev=()=>room('Elevator',455,290,90,60,'#3c4b5b','Passenger elevator serving all three floors.',{lt:1,f:rc(460,295,38,50,'#5a6d80','#1c2b2a')+rc(502,295,38,50,'#5a6d80','#1c2b2a'),ly:320});
 const ns=(x,y)=>rc(x,y,14,14,'#8a5a3c','#5a3a24');
 const bath=(x,y,w=75,h=70)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="#e6f1f0" stroke="#1c2b2a" stroke-width="3"/>${u('tub',x+8,y+h-(w>90?42:32),0,w>90?1.4:1)}${u('wc',x+w-18,y+22)}${u('sink',x+18,y+18)}`;
@@ -116,7 +121,7 @@ R+=room('Restaurant',50,40,280,190,'#ecd6ad','Main dining hall with seating for 
 R+=room('Kitchen',330,40,140,190,'#dfe4e2','Back-of-house kitchen with prep counters and cooking island, linked to the restaurant.',{ly:205,f:rc(340,48,120,22,'#b9c2c0','#7d8886')+rc(365,105,74,46,'#c9d1cf','#7d8886')+[[385,120],[415,120],[385,137],[415,137]].map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="5" fill="#555"/>`).join('')});
 R+=room('Lounge',470,40,230,190,'#f0e2c8','Relaxed seating area for guests waiting for rooms, tours or transport.',{ly:175,f:u('sofa',490,58)+u('sofa',600,58)+rc(515,110,60,34,'#b98a55','#6d4a2a')+rc(605,110,60,34,'#b98a55','#6d4a2a')+u('tree',500,205,0,.6)+u('tree',675,205,0,.6)});
 R+=room('Restrooms',700,40,100,190,'#e4efed','Male and female restrooms, each with its own entrance from the lobby.',{t:'M | F',ly:160,f:'<path d="M750 40V230" stroke="#1c2b2a" stroke-width="3"/>'+[725,775].map(x=>u('wc',x,72)+u('wc',x,120)+u('sink',x,190)).join('')});
-R+=stairs(230);R+=elev();
+R+=stairs(230);R+=elev();R+=fxr();
 R+=room('Concierge Desk',130,395,170,28,'#7b4f33','Guest services desk for tours, transport bookings and local Cebu tips.',{lt:1,t:'CONCIERGE',f:[165,215,265].map(x=>`<circle cx="${x}" cy="440" r="8" fill="#444"/>`).join('')});
 R+=room('Front Desk',570,395,210,28,'#7b4f33','Check-in and check-out counter, the first point of contact for arriving guests.',{lt:1,t:'FRONT DESK',f:[610,675,740].map(x=>`<circle cx="${x}" cy="440" r="8" fill="#444"/>`).join('')});
 let c='';for(let i=0;i<9;i++)c+=`<path d="M${70+i*105} 512V600" stroke="#fff" stroke-width="3"/>`;for(let i=0;i<8;i++)c+=u('car',122.5+i*105,556);
@@ -132,7 +137,7 @@ R+=room('VIP Suite',470,40,330,210,'#f8f0df','Largest room on the floor with kin
 DR+=door(620,250,40,'h',-1);
 [['Standard Room 1',50],['Standard Room 2',260],['Standard Room 3',470]].forEach(a=>R+=guest(a[0],a[1],390,210,210,'Standard room with queen bed, sofa and private bathroom.',0));
 R+=guest('Standard Room 4',680,390,250,210,'Standard room with queen bed, sofa and private bathroom.',0);
-R+=stairs(250);R+=elev();
+R+=stairs(250);R+=elev();R+=fxr();
 return [R,frame(600)+DR+door(835,250,44,'h',1)+fe()]}
 
 function f3(){let R='',DR3='';
@@ -140,7 +145,7 @@ let lg='';[[392,60],[392,120],[468,60],[468,120]].forEach(p=>lg+=u('lng',...p));
 R+=room('Corridor',50,250,880,140,'#efe6d2','Central corridor linking the pool deck, bar, dressing room, gym and park to the elevator.',{lx:250,ly:320});
 R+=room('Pool',50,40,450,210,'#e9e2cf','Outdoor swimming pool with sun deck and loungers, the floor centerpiece.',{t:'SWIMMING POOL',lx:230,ly:125,f:'<rect x="80" y="70" width="300" height="110" rx="8" fill="#7fd0d6" stroke="#2a8f9a" stroke-width="4"/><path d="M90 107H370M90 143H370" stroke="#fff" stroke-dasharray="8 6" opacity=".7"/>'+lg+'<circle cx="430" cy="90" r="18" fill="#e0803f" opacity=".85"/><circle cx="430" cy="150" r="18" fill="#e0803f" opacity=".85"/>'+[0,1,2,3,4,5].map(i=>u('lng',95+i*45,200)).join('')});
 R+=room('Bar',500,40,300,210,'#f0e2c8','Poolside bar serving drinks and light bites, with counter stools and tables.',{ly:120,f:rc(520,60,240,28,'#6d4a2a','#3d2a18')+rc(520,60,28,120,'#6d4a2a','#3d2a18')+[0,1,2,3,4,5].map(i=>`<circle cx="${560+i*36}" cy="104" r="7" fill="#444"/>`).join('')+[600,680,760].map(x=>u('tbl',x,195)).join('')});
-R+=stairs(250);R+=elev();
+R+=stairs(250);R+=elev();R+=fxr();
 R+=room('Dressing Room',50,390,200,210,'#e6efe9','Changing area with lockers and benches for pool and gym guests.',{ly:560,f:[0,1,2,3,4,5,6,7].map(i=>u('lk',62+i*22,400)).join('')+rc(70,500,110,18,'#b98a55','#6d4a2a')});
 R+=room('Gym',250,390,380,210,'#dfe6e8','Fitness area with treadmills, benches, a weight rack and a stretching mat zone.',{ly:575,f:[0,1,2,3,4].map(i=>u('tm',270+i*46,410)).join('')+rc(280,510,70,22,'#4a565c','#2d3438')+rc(280,545,70,22,'#4a565c','#2d3438')+rc(400,510,140,40,'#8a9499','#2d3438')+rc(550,410,60,90,'#5c8a7a','#3d6558')});
 R+=room('Park',630,390,300,210,'#a8cf94','Landscaped rooftop garden with trees, benches and a small fountain for relaxing.',{ly:575,f:'<path d="M632 540C700 480 800 560 928 480" stroke="#e8dcc0" stroke-width="26" fill="none"/>'+[[670,430],[760,440],[880,420],[700,565],[850,560]].map(p=>u('tree',...p,0,.9)).join('')+'<circle cx="785" cy="510" r="20" fill="#7fd0d6" stroke="#2a8f9a" stroke-width="3"/>'+rc(700,505,40,12,'#8a5a3c','#5a3a24')+rc(830,500,40,12,'#8a5a3c','#5a3a24')});
@@ -165,13 +170,14 @@ if(moved&&cur.w<fitW()-2){cancelAnimationFrame(raf);const k=pan.v.w/vw.clientWid
 window.addEventListener('resize',()=>setV(clampV({...cur,w:Math.min(cur.w,fitW())})));
 const F={f1:[f1,'First Floor Plan','SHEET A-101'],f2:[f2,'Second Floor Plan','SHEET A-102'],f3:[f3,'Third Floor Plan','SHEET A-103']};
 const hint='<span class="d-note">Click any room on the plan to see its size and purpose.</span>';
-function show(k){rid=0;DR='';const [R,O]=F[k][0]();$('rooms').innerHTML=R;$('over').innerHTML=O;$('ft').textContent=F[k][1];$('fs').textContent=F[k][2];$('rail').innerHTML=hint;fit(true);$('tip').style.opacity=1;const ch=$('chips');ch.innerHTML='';
+function show(k){rid=0;DR='';const [R,O]=F[k][0]();$('rooms').innerHTML=R;$('over').innerHTML=O;$('ft').textContent=F[k][1];$('fs').textContent=F[k][2];$('rail').innerHTML=hint;$('rt').classList.remove('on');$('rt').textContent='🔥 Show emergency route';fit(true);$('tip').style.opacity=1;const ch=$('chips');ch.innerHTML='';
 const rs=[...document.querySelectorAll('.room')];
 rs.forEach(r=>{const pick=()=>{rs.forEach(x=>x.classList.remove('sel'));r.classList.add('sel');r.parentNode.appendChild(r);zoomRoom(r);$('tip').style.opacity=0;const w=r.dataset.w/40,h=r.dataset.h/40;
-$('rail').innerHTML=`<span class="d-name">${r.dataset.name}</span><span class="d-meta">${w.toFixed(1)} m × ${h.toFixed(1)} m · ${(w*h).toFixed(1)} m²</span><span class="d-note">${r.dataset.note}</span>`;
+$('rail').innerHTML=`<span class="d-name">${r.dataset.name}</span>${r.dataset.ns?'':`<span class="d-meta">${w.toFixed(1)} m × ${h.toFixed(1)} m · ${(w*h).toFixed(1)} m²</span>`}<span class="d-note">${r.dataset.note}</span>`;
 ch.querySelectorAll('button').forEach(b=>{const on=b.dataset.i==r.id;b.classList.toggle('on',on);if(on)b.scrollIntoView({inline:'center',block:'nearest'})})};
 r.addEventListener('click',()=>{if(!moved)pick()});r.addEventListener('keydown',e=>{if(e.key=='Enter'||e.key==' '){e.preventDefault();pick()}});
 const b=document.createElement('button');b.textContent=r.dataset.name;b.dataset.i=r.id;b.onclick=pick;ch.appendChild(b)})}
+$('rt').onclick=()=>{const o=$('over'),r=o.querySelector('#route'),b=$('rt');if(r){r.remove();b.classList.remove('on');b.textContent='🔥 Show emergency route'}else{o.insertAdjacentHTML('beforeend',ROUTE);b.classList.add('on');b.textContent='Hide emergency route';fit()}};
 document.querySelectorAll('#tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#tabs button').forEach(x=>x.classList.remove('active'));b.classList.add('active');show(b.dataset.k)});
 show('f1');
 </script></body></html>
