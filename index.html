@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kasadya Hotel — Mandaue City, Cebu</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+<style>
+:root{--deep:#0b4d52;--mid:#116b6e;--lag:#3fa9a4;--sand:#f4ecd8;--shell:#fdf9ef;--coral:#e0803f;--ink:#1c2b2a;--mut:#5f7371;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html,body{height:100%}
+body{margin:0;background:var(--deep) radial-gradient(circle at 15% 0,rgba(63,169,164,.35),transparent 55%);color:var(--ink);font-family:'IBM Plex Mono',monospace}
+.sheet{max-width:1180px;margin:0 auto;padding:28px 18px 56px}
+header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:14px;padding-bottom:18px;margin-bottom:22px;border-bottom:2px solid rgba(253,249,239,.25)}
+h1{font:700 clamp(28px,4.2vw,46px) Fraunces,serif;margin:0 0 6px;color:var(--shell)}
+.loc{font-size:13px;color:var(--lag)}
+.meta{display:flex;gap:24px;font-size:11.5px;color:rgba(253,249,239,.6);line-height:1.6}.meta span{display:block;color:var(--shell);font-size:13px}
+nav{display:flex;gap:2px}
+nav button{flex:1;font:12.5px 'IBM Plex Mono';color:rgba(253,249,239,.65);background:rgba(253,249,239,.05);border:1px solid rgba(253,249,239,.2);border-bottom:none;padding:13px 8px;cursor:pointer}
+nav button.active{background:var(--sand);color:var(--deep);font-weight:600}
+nav button:not(.active):hover{background:rgba(253,249,239,.12);color:var(--shell)}
+.frame{background:var(--sand);padding:22px;border:1px solid rgba(253,249,239,.2)}
+.head{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px dashed var(--mid);padding-bottom:10px;margin-bottom:14px}
+.head h2{font:600 22px Fraunces,serif;margin:0;color:var(--deep)}.head span{font-size:12px;color:var(--mut)}
+.scroll{overflow-x:auto;background:#fbf6ea;border:1px solid #d8cdb2}
+svg{display:block;width:100%;min-width:820px;height:auto}
+.room{cursor:pointer;outline:none}
+.room .fl{stroke:#1c2b2a;stroke-width:5;transition:filter .15s}
+.room:hover .fl{filter:brightness(.92)}
+.room.sel .fl,.room:focus-visible .fl{stroke:#e0803f}
+.lb{font:600 12px 'IBM Plex Mono';text-anchor:middle;dominant-baseline:middle;fill:#1c2b2a;paint-order:stroke;stroke:rgba(251,246,234,.9);stroke-width:4px;pointer-events:none;letter-spacing:.4px}
+.lt .lb{fill:#fff;stroke:none}
+.dr{fill:none;stroke:#1c2b2a;stroke-width:1.5}
+.dm path{stroke:#5f7371;stroke-width:1;fill:none}.dm text{font:500 10px 'IBM Plex Mono';fill:#5f7371;text-anchor:middle}
+.ex{font:700 8px 'IBM Plex Mono';fill:#fff;text-anchor:middle}.fx{font:700 10px 'IBM Plex Mono';fill:#1f9d55;text-anchor:middle;letter-spacing:1px}
+.ent{font:700 10px 'IBM Plex Mono';fill:#0b4d52;text-anchor:middle;letter-spacing:1px}
+.rail{margin-top:14px;padding:13px 16px;border:1px dashed var(--mid);background:rgba(253,249,239,.7);display:flex;flex-wrap:wrap;gap:6px 18px;align-items:baseline;min-height:48px}
+.d-name{font:600 16px Fraunces,serif;color:var(--deep)}.d-meta{font-size:11.5px;color:var(--coral);font-weight:600}.d-note{font-size:11.5px;color:var(--mut);flex-basis:100%}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.chips button{font:11px 'IBM Plex Mono';border:1px solid var(--mid);background:transparent;padding:5px 9px;cursor:pointer;color:var(--deep)}
+.chips button.on{background:var(--deep);color:#fff}
+.legend{margin-top:12px;font-size:11px;color:var(--mut);display:flex;gap:18px;flex-wrap:wrap}
+footer{margin-top:20px;font-size:11px;color:rgba(253,249,239,.55);display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px}
+</style></head><body><div class="sheet">
+<header><div><h1>Kasadya Hotel</h1><span class="loc">📍 Mandaue City, Cebu, Philippines</span></div>
+<div class="meta"><div>DEADLINE<span>Oct 5, 2026</span></div><div>SHEETS<span>A-101 / A-102 / A-103</span></div><div>SCALE<span>1 grid = 1 m</span></div></div></header>
+<nav id="tabs"><button class="active" data-k="f1">1st Floor · Arrival &amp; Dining</button><button data-k="f2">2nd Floor · Guest Rooms</button><button data-k="f3">3rd Floor · Leisure</button></nav>
+<div class="frame">
+<div class="head"><h2 id="ft"></h2><span id="fs"></span></div>
+<div class="scroll"><svg viewBox="0 0 1000 690" role="img" aria-label="Hotel floor plan">
+<defs>
+<pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#e3dac4" stroke-width=".7"/></pattern>
+<rect id="ch" x="-7" y="-6" width="14" height="12" rx="3" fill="#9aa59f" stroke="#59645f"/>
+<g id="tbl"><circle r="17" fill="#b98a55" stroke="#6d4a2a" stroke-width="1.5"/><use href="#ch" y="-26"/><use href="#ch" y="26"/><use href="#ch" x="-26"/><use href="#ch" x="26"/></g>
+<g id="sofa"><rect width="80" height="30" rx="5" fill="#8d8f8c" stroke="#4d504e" stroke-width="1.5"/><rect x="4" y="4" width="72" height="14" rx="3" fill="#a9aca8"/></g>
+<g id="bed"><rect width="64" height="78" rx="4" fill="#f7f7f4" stroke="#8b8b85" stroke-width="1.5"/><rect x="5" y="4" width="24" height="14" rx="3" fill="#dcdcd6"/><rect x="35" y="4" width="24" height="14" rx="3" fill="#dcdcd6"/><rect y="28" width="64" height="50" rx="3" fill="#bcd3d0"/></g>
+<g id="car"><rect x="-17" y="-34" width="34" height="68" rx="12" fill="#2b2f33"/><rect x="-12" y="-16" width="24" height="26" rx="6" fill="#7f97a8"/><rect x="-12" y="-27" width="24" height="9" rx="4" fill="#5d7486"/></g>
+<g id="wc"><rect x="-9" y="-14" width="18" height="8" rx="2" fill="#fff" stroke="#777"/><ellipse cy="2" rx="8" ry="11" fill="#fff" stroke="#777"/></g>
+<rect id="sink" x="-10" y="-8" width="20" height="16" rx="4" fill="#fff" stroke="#777"/>
+<g id="tub"><rect width="56" height="26" rx="10" fill="#fff" stroke="#7a8a8a" stroke-width="1.5"/><rect x="5" y="4" width="46" height="18" rx="8" fill="#dbeaea"/></g>
+<g id="tree"><circle r="22" fill="#5f9b57" stroke="#3b6b38" stroke-width="2"/><circle r="12" fill="#79b56d"/></g>
+<rect id="lng" width="18" height="40" rx="5" fill="#fbf6ea" stroke="#9c8f74" stroke-width="1.3"/>
+<g id="tm"><rect width="24" height="52" rx="3" fill="#2d3438"/><rect x="4" y="6" width="16" height="38" fill="#4a565c"/></g>
+<rect id="lk" width="16" height="22" fill="#7d8f9a" stroke="#4a5a63"/>
+</defs>
+<rect width="1000" height="690" fill="url(#grid)"/>
+<g id="rooms"></g><g id="over" pointer-events="none"></g>
+</svg></div>
+<div class="rail" id="rail"></div><div class="chips" id="chips"></div>
+<div class="legend"><span>■ Elevator</span><span style="color:#1f9d55">■ Fire exit</span><span>◜ Door swing</span><span>Tap or click any room for its size and purpose</span></div>
+</div>
+<footer><span>Kasadya Hotel — Digital Layout Exercise</span><span>Midterm "Performance" Exam · Mandaue City, Cebu</span></footer>
+</div>
+<script>
+let rid=0,DR='';
+const u=(id,x,y,r=0,s=1)=>`<use href="#${id}" transform="translate(${x} ${y}) rotate(${r}) scale(${s})"/>`;
+const rc=(x,y,w,h,f,st='#7d6a4d')=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${f}" stroke="${st}" stroke-width="1.5"/>`;
+const room=(name,x,y,w,h,fill,note,o={})=>{const id='r'+rid++,tx=o.lx??x+w/2,ty=o.ly??y+h/2;
+return `<g class="room${o.lt?' lt':''}" id="${id}" tabindex="0" role="button" aria-label="${name}" data-name="${name}" data-note="${note}" data-w="${w}" data-h="${h}"><rect class="fl" x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}"/>${o.f||''}<text class="lb" x="${tx}" y="${ty}">${o.t||name.toUpperCase()}</text></g>`};
+const door=(x,y,l,d,s)=>d=='h'?`<rect x="${x+1}" y="${y-4}" width="${l-2}" height="8" fill="#fbf6ea"/><path class="dr" d="M${x} ${y}V${y+l*s}M${x+l} ${y}A${l} ${l} 0 0 ${s>0?1:0} ${x} ${y+l*s}"/>`:`<rect x="${x-4}" y="${y+1}" width="8" height="${l-2}" fill="#fbf6ea"/><path class="dr" d="M${x} ${y}H${x+l*s}M${x} ${y+l}A${l} ${l} 0 0 ${s>0?0:1} ${x+l*s} ${y}"/>`;
+const dH=(a,b,y)=>`<g class="dm"><path d="M${a} ${y}H${b}M${a} ${y-5}v10M${b} ${y-5}v10"/><text x="${(a+b)/2}" y="${y-6}">${((b-a)/40).toFixed(2)} m</text></g>`;
+const dV=(a,b,x)=>`<g class="dm"><path d="M${x} ${a}V${b}M${x-5} ${a}h10M${x-5} ${b}h10"/><text transform="translate(${x-6} ${(a+b)/2}) rotate(-90)">${((b-a)/40).toFixed(2)} m</text></g>`;
+const frame=yb=>dH(50,930,24)+dV(40,yb,26)+`<g class="dm"><path d="M50 672h160M50 667v10M130 667v10M210 667v10"/><text x="130" y="662">4 m</text></g>`;
+const fe=()=>door(930,130,40,'v',-1)+`<rect x="937" y="128" width="12" height="44" rx="3" fill="#1f9d55"/><text class="ex" transform="translate(946 150) rotate(90)">EXIT</text><text class="fx" transform="translate(966 150) rotate(90)">FIRE EXIT</text>`;
+const stairs=(y2,st=[])=>{let s='';for(let y=48;y<y2-8;y+=12)s+=`<path d="M808 ${y}H922" stroke="#7b8583"/>`;return room('Stairs',800,40,130,y2-40,'#d3d9d7','Main staircase between floors, next to the fire exit.',{f:s,ly:y2/2+20}) };
+const elev=()=>room('Elevator',455,290,90,60,'#3c4b5b','Passenger elevator serving all three floors.',{lt:1,f:rc(460,295,38,50,'#5a6d80','#1c2b2a')+rc(502,295,38,50,'#5a6d80','#1c2b2a'),ly:320});
+const ns=(x,y)=>rc(x,y,14,14,'#8a5a3c','#5a3a24');
+const bath=(x,y,w=75,h=70)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="#e6f1f0" stroke="#1c2b2a" stroke-width="3"/>${u('tub',x+8,y+h-(w>90?42:32),0,w>90?1.4:1)}${u('wc',x+w-18,y+22)}${u('sink',x+18,y+18)}`;
+const guest=(name,x,y,w,h,note,top)=>{const bx=x+w/2-32,by=top?y+16:y+h-94;
+DR+=top?door(x+92,y+h,34,'h',-1):door(x+92,y,34,'h',1);
+return room(name,x,y,w,h,'#f6eedd',note,{ly:top?y+108:y+100,f:u('bed',bx,by)+ns(bx-20,by)+ns(bx+70,by)+u('sofa',x+w-92,top?y+120:y+52,0,.9)+(top?bath(x+5,y+h-75):bath(x+5,y+5))})};
+
+function f1(){let R='',T=[[100,120],[190,120],[280,120],[100,190],[190,190],[280,190]].map(p=>u('tbl',...p)).join('');
+R+=room('Lobby',50,230,880,250,'#f4ead4','Open reception lobby linking the entrance to the restaurant, lounge, front desk and elevator.',{lx:150,ly:262,f:u('tree',85,445,0,.7)+u('tree',895,445,0,.7)+u('sofa',650,290)+u('sofa',770,290)+rc(715,330,70,22,'#b98a55','#6d4a2a')});
+R+=room('Restaurant',50,40,280,190,'#ecd6ad','Main dining hall with seating for 24 guests, serving Filipino and Cebuano dishes.',{ly:56,f:T});
+R+=room('Kitchen',330,40,140,190,'#dfe4e2','Back-of-house kitchen with prep counters and cooking island, linked to the restaurant.',{ly:205,f:rc(340,48,120,22,'#b9c2c0','#7d8886')+rc(365,105,74,46,'#c9d1cf','#7d8886')+[[385,120],[415,120],[385,137],[415,137]].map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="5" fill="#555"/>`).join('')});
+R+=room('Lounge',470,40,230,190,'#f0e2c8','Relaxed seating area for guests waiting for rooms, tours or transport.',{ly:175,f:u('sofa',490,58)+u('sofa',600,58)+rc(515,110,60,34,'#b98a55','#6d4a2a')+rc(605,110,60,34,'#b98a55','#6d4a2a')+u('tree',500,205,0,.6)+u('tree',675,205,0,.6)});
+R+=room('Restrooms',700,40,100,190,'#e4efed','Male and female restrooms, each with its own entrance from the lobby.',{t:'M | F',ly:160,f:'<path d="M750 40V230" stroke="#1c2b2a" stroke-width="3"/>'+[725,775].map(x=>u('wc',x,72)+u('wc',x,120)+u('sink',x,190)).join('')});
+R+=stairs(230);R+=elev();
+R+=room('Concierge Desk',130,395,170,28,'#7b4f33','Guest services desk for tours, transport bookings and local Cebu tips.',{lt:1,t:'CONCIERGE',f:[165,215,265].map(x=>`<circle cx="${x}" cy="440" r="8" fill="#444"/>`).join('')});
+R+=room('Front Desk',570,395,210,28,'#7b4f33','Check-in and check-out counter, the first point of contact for arriving guests.',{lt:1,t:'FRONT DESK',f:[610,675,740].map(x=>`<circle cx="${x}" cy="440" r="8" fill="#444"/>`).join('')});
+let c='';for(let i=0;i<9;i++)c+=`<path d="M${70+i*105} 512V600" stroke="#fff" stroke-width="3"/>`;for(let i=0;i<8;i++)c+=u('car',122.5+i*105,556);
+R+=room('Parking Lot',50,500,880,150,'#d6d9d7','Guest and staff parking with 8 marked slots and direct access to the main entrance.',{ly:630,f:c,t:'PARKING LOT'});
+const O=frame(650)+door(400,480,50,'h',-1)+door(450,480,50,'h',-1)+`<text class="ent" x="450" y="462">MAIN ENTRANCE</text>`+door(150,230,44,'h',1)+door(560,230,44,'h',1)+door(390,230,36,'h',1)+door(330,50,32,'v',-1)+door(705,230,36,'h',1)+door(756,230,36,'h',1)+door(835,230,44,'h',1)+fe();
+return [R,O]}
+
+function f2(){let R='';
+R+=room('Corridor',50,250,880,140,'#efe6d2','Central corridor connecting every guest room to the elevator, stairs and fire exit.',{lx:250,ly:320,f:'<path d="M90 320H420M580 320H890" stroke="#d8c9a8" stroke-width="18" stroke-dasharray="2 12"/>'});
+R+=guest('Deluxe Room 1',50,40,210,210,'Deluxe room with king bed, sofa and en-suite bathroom.',1);
+R+=guest('Deluxe Room 2',260,40,210,210,'Deluxe room with king bed, sofa and en-suite bathroom.',1);
+R+=room('VIP Suite',470,40,330,210,'#f8f0df','Largest room on the floor with king bed, lounge sofa, work desk and full bathroom with tub.',{ly:162,f:u('bed',595,54,0,1.25)+ns(575,54)+ns(681,54)+u('sofa',490,170,0,1.2)+rc(490,56,90,26,'#8a5a3c','#5a3a24')+'<circle cx="535" cy="98" r="9" fill="#9aa59f"/>'+bath(692,164,102,80)});
+DR+=door(620,250,40,'h',-1);
+[['Standard Room 1',50],['Standard Room 2',260],['Standard Room 3',470]].forEach(a=>R+=guest(a[0],a[1],390,210,210,'Standard room with queen bed, sofa and private bathroom.',0));
+R+=guest('Standard Room 4',680,390,250,210,'Standard room with queen bed, sofa and private bathroom.',0);
+R+=stairs(250);R+=elev();
+return [R,frame(600)+DR+door(835,250,44,'h',1)+fe()]}
+
+function f3(){let R='',DR3='';
+let lg='';[[392,60],[392,120],[468,60],[468,120]].forEach(p=>lg+=u('lng',...p));
+R+=room('Corridor',50,250,880,140,'#efe6d2','Central corridor linking the pool deck, bar, dressing room, gym and park to the elevator.',{lx:250,ly:320});
+R+=room('Pool',50,40,450,210,'#e9e2cf','Outdoor swimming pool with sun deck and loungers, the floor centerpiece.',{t:'SWIMMING POOL',lx:230,ly:125,f:'<rect x="80" y="70" width="300" height="110" rx="8" fill="#7fd0d6" stroke="#2a8f9a" stroke-width="4"/><path d="M90 107H370M90 143H370" stroke="#fff" stroke-dasharray="8 6" opacity=".7"/>'+lg+'<circle cx="430" cy="90" r="18" fill="#e0803f" opacity=".85"/><circle cx="430" cy="150" r="18" fill="#e0803f" opacity=".85"/>'+[0,1,2,3,4,5].map(i=>u('lng',95+i*45,200)).join('')});
+R+=room('Bar',500,40,300,210,'#f0e2c8','Poolside bar serving drinks and light bites, with counter stools and tables.',{ly:120,f:rc(520,60,240,28,'#6d4a2a','#3d2a18')+rc(520,60,28,120,'#6d4a2a','#3d2a18')+[0,1,2,3,4,5].map(i=>`<circle cx="${560+i*36}" cy="104" r="7" fill="#444"/>`).join('')+[600,680,760].map(x=>u('tbl',x,195)).join('')});
+R+=stairs(250);R+=elev();
+R+=room('Dressing Room',50,390,200,210,'#e6efe9','Changing area with lockers and benches for pool and gym guests.',{ly:560,f:[0,1,2,3,4,5,6,7].map(i=>u('lk',62+i*22,400)).join('')+rc(70,500,110,18,'#b98a55','#6d4a2a')});
+R+=room('Gym',250,390,380,210,'#dfe6e8','Fitness area with treadmills, benches, a weight rack and a stretching mat zone.',{ly:575,f:[0,1,2,3,4].map(i=>u('tm',270+i*46,410)).join('')+rc(280,510,70,22,'#4a565c','#2d3438')+rc(280,545,70,22,'#4a565c','#2d3438')+rc(400,510,140,40,'#8a9499','#2d3438')+rc(550,410,60,90,'#5c8a7a','#3d6558')});
+R+=room('Park',630,390,300,210,'#a8cf94','Landscaped rooftop garden with trees, benches and a small fountain for relaxing.',{ly:575,f:'<path d="M632 540C700 480 800 560 928 480" stroke="#e8dcc0" stroke-width="26" fill="none"/>'+[[670,430],[760,440],[880,420],[700,565],[850,560]].map(p=>u('tree',...p,0,.9)).join('')+'<circle cx="785" cy="510" r="20" fill="#7fd0d6" stroke="#2a8f9a" stroke-width="3"/>'+rc(700,505,40,12,'#8a5a3c','#5a3a24')+rc(830,500,40,12,'#8a5a3c','#5a3a24')});
+return [R,frame(600)+door(200,250,44,'h',-1)+door(620,250,44,'h',-1)+door(100,390,36,'h',1)+door(410,390,44,'h',1)+door(740,390,44,'h',1)+door(835,250,44,'h',1)+fe()]}
+
+const F={f1:[f1,'First Floor Plan','SHEET A-101'],f2:[f2,'Second Floor Plan','SHEET A-102'],f3:[f3,'Third Floor Plan','SHEET A-103']};
+const $=id=>document.getElementById(id),hint='<span class="d-note">Click any room on the plan to see its size and purpose.</span>';
+function show(k){rid=0;DR='';const [R,O]=F[k][0]();$('rooms').innerHTML=R;$('over').innerHTML=O;$('ft').textContent=F[k][1];$('fs').textContent=F[k][2];$('rail').innerHTML=hint;const ch=$('chips');ch.innerHTML='';
+const rs=[...document.querySelectorAll('.room')];
+rs.forEach(r=>{const pick=()=>{rs.forEach(x=>x.classList.remove('sel'));r.classList.add('sel');r.parentNode.appendChild(r);const w=r.dataset.w/40,h=r.dataset.h/40;
+$('rail').innerHTML=`<span class="d-name">${r.dataset.name}</span><span class="d-meta">${w.toFixed(1)} m × ${h.toFixed(1)} m · ${(w*h).toFixed(1)} m²</span><span class="d-note">${r.dataset.note}</span>`;
+ch.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.i==r.id))};
+r.addEventListener('click',pick);r.addEventListener('keydown',e=>{if(e.key=='Enter'||e.key==' '){e.preventDefault();pick()}});
+const b=document.createElement('button');b.textContent=r.dataset.name;b.dataset.i=r.id;b.onclick=pick;ch.appendChild(b)})}
+document.querySelectorAll('#tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#tabs button').forEach(x=>x.classList.remove('active'));b.classList.add('active');show(b.dataset.k)});
+show('f1');
+</script></body></html>
